@@ -1,0 +1,7 @@
+coprocessor:
+  url: http://localhost:3007
+  router:
+    request:
+      headers: true
+      context: true
+      body: true
