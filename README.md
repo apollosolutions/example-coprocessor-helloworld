@@ -1,4 +1,4 @@
-# External Authenticating using a Coprocessor
+# Coprocessor "Hello World"
 
 This repository demonstrates how to setup a skeleton coprocessor that simply logs the `payload` from the Router.
 
