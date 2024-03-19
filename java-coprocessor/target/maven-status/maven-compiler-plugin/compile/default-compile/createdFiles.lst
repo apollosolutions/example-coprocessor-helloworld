@@ -1,0 +1,5 @@
+com/example/demo/RequestHandlers/RouterRequest.class
+com/example/demo/Models/RouterRequestBody.class
+com/example/demo/Models/Context.class
+com/example/demo/DemoApplication.class
+com/example/demo/CoprocessorController.class
