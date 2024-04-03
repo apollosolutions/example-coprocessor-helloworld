@@ -1,26 +1,27 @@
 package com.example.demo;
 
-import com.example.demo.Models.RouterRequestBody;
-import org.springframework.web.bind.annotation.*;
+import com.example.demo.models.CoprocessorStage;
+import com.example.demo.models.RouterPayload;
+import com.example.demo.handlers.RouterRequestHandler;
 
-import com.example.demo.RequestHandlers.RouterRequest;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class CoprocessorController {
-    private final RouterRequest routerRequestHandler;
+    private final RouterRequestHandler routerRequestHandler;
 
     public CoprocessorController() {
-        this.routerRequestHandler = new RouterRequest();
+        this.routerRequestHandler = new RouterRequestHandler();
     }
 
     @PostMapping("/")
-    public RouterRequestBody StageSelect(@RequestBody RouterRequestBody request) {
-        String stage = request.getStage();
+    public RouterPayload StageSelect(@RequestBody RouterPayload request) {
+        CoprocessorStage stage = request.getStage();
 
-        switch (stage) {
-            case "RouterRequest":
-                request = routerRequestHandler.handle(request);
-                break;
+        if (stage == CoprocessorStage.ROUTER_REQUEST) {
+            request = routerRequestHandler.handle(request);
         }
 
         return request;

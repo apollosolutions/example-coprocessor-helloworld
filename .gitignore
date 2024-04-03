@@ -129,5 +129,9 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+# Router binary
 router/router
-.env
+router/configuration_schema.json
+
+# IDE files
+.idea
