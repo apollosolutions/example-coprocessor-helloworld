@@ -43,8 +43,6 @@ func (rr *RouterRequest) UnmarshalJSON(data []byte) error {
 	// 1. Unmarshal everything but Body
 	if err = json.Unmarshal(data, &tmpRequest); err != nil {
 
-		fmt.Println("Can we even unmarshal something? ,", data)
-
 		return fmt.Errorf("failed to unmarshal router request: %v", err)
 	}
 
@@ -94,16 +92,22 @@ func (rr *RouterRequest) MarshalJSON() ([]byte, error) {
 		*TmpType
 	}
 
-	var jsonBody []byte
-	jsonBody, err = json.Marshal(rr.Body)
-	if err != nil {
-		logger.Error(err, "failed to marshal coprocessor request string into struct: %v")
+	routerRequestBodyOverride := &RouterRequestBodyOverride{
+		TmpType: (*TmpType)(rr),
 	}
 
-	return json.Marshal(&RouterRequestBodyOverride{
-		Body:    string(jsonBody),
-		TmpType: (*TmpType)(rr),
-	})
+	if rr.Body != nil {
+		var jsonBody []byte
+		jsonBody, err = json.Marshal(rr.Body)
+
+		if err != nil {
+			logger.Error(err, "failed to marshal coprocessor request string into struct: %v")
+		}
+
+		routerRequestBodyOverride.Body = string(jsonBody)
+	}
+
+	return json.Marshal(routerRequestBodyOverride)
 }
 
 type RouterResponse struct {
@@ -185,26 +189,43 @@ func (rr *RouterResponse) MarshalJSON() ([]byte, error) {
 		*TmpType
 	}
 
-	var jsonBody []byte
-	jsonBody, err = json.Marshal(rr.Body)
-	if err != nil {
-		logger.Error(err, "failed to unmarshal coprocessor request string into struct: %v")
+	routerRequestBodyOverride := &RouterRequestBodyOverride{
+		TmpType: (*TmpType)(rr),
 	}
 
-	return json.Marshal(&RouterRequestBodyOverride{
-		Body:    string(jsonBody),
-		TmpType: (*TmpType)(rr),
-	})
+	if rr.Body != nil {
+		var jsonBody []byte
+		jsonBody, err = json.Marshal(rr.Body)
+
+		if err != nil {
+			logger.Error(err, "failed to marshal coprocessor request string into struct: %v")
+		}
+
+		routerRequestBodyOverride.Body = string(jsonBody)
+	}
+
+	return json.Marshal(routerRequestBodyOverride)
 }
 
 func handleRouterRequest(httpRequestBody *[]byte) (*RouterRequest, error) {
 	cr, err := NewRouterRequest(httpRequestBody)
 
-	fmt.Println("Request: ", cr)
-
 	if err != nil {
 		return nil, fmt.Errorf("error unmarshaling httpRequestBody: %w", err)
 	}
+
+	// Normally you won't Marshal like this, this is simply to get a stringified
+	// representation of the request in the console
+	requestBody, err := json.Marshal(cr)
+
+	if err != nil {
+		logger.Error(err, "failed to unmarshal coprocessor request string into struct: %v")
+	}
+
+	// This is the object sent by the Router that you can act upon to update headers, context, auth claims, etc
+	// If you update the "control" property from "Continue" to something like { "break": 400 }, it will terminate the request and return the specified HTTP error
+	// See: https://www.apollographql.com/docs/router/customizations/coprocessor/
+	fmt.Println(string(requestBody))
 
 	return cr, nil
 }
@@ -222,7 +243,6 @@ func NewRouterRequest(httpRequestBody *[]byte) (*RouterRequest, error) {
 	var cr *RouterRequest
 	err = json.Unmarshal(*httpRequestBody, &cr)
 	if err != nil {
-		fmt.Println("Error on unmarshal: ", err, &cr)
 		return nil, err
 	}
 	return cr, nil
