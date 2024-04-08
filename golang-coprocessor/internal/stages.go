@@ -13,6 +13,7 @@ func HandleRequest(w http.ResponseWriter, r *http.Request) (interface{}, error) 
 		return nil, fmt.Errorf("error unmarshaling httpRequestBody: %w", err)
 	}
 
+	// Add more stages here as needed as per the docs: https://www.apollographql.com/docs/router/customizations/coprocessor/#stage
 	switch stage {
 	case "RouterRequest":
 		return handleRouterRequest(httpRequestBody)

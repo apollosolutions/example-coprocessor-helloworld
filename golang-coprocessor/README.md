@@ -10,23 +10,11 @@ Modeled after the ["Server project"](https://go.dev/doc/modules/layout) layout
 
 ## Run
 
-1. Pick one of the Golang frameworks exampled under `cmd`. Customers often have a "platform" preferred one they write other services in.
 1. Start the coprocessor
-    ```shell
-    go run cmd/simple-http/main.go
-    ```
-    or
-    ```shell
-    go run cmd/gorilla-mux/main.go
-    ```
-    ... etc.
+   ```shell
+   go run cmd/simple-http/main.go
+   ```
 1. [Start the router](/router/README.md#running-the-router)
-
-## Packaging for a customer
-
-1. Copy whole directory
-1. Remove unnecessary `cmd`'s
-1. Run `go mod tidy` which will cleanup the imports for all the other frameworks
 
 ## Logging types
 
