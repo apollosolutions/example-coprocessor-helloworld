@@ -65,22 +65,22 @@ func RequestHandler(w http.ResponseWriter, r *http.Request) {
 
 	cr, err := HandleRequest(w, r)
 	if err != nil {
-		logger.Error(err, "error handling coprocessor request")
-		http.Error(w, fmt.Sprintf("error: %s", err), http.StatusInternalServerError)
+		logger.Error(err, "Error handling coprocessor request")
+		http.Error(w, fmt.Sprintf("Error: %s", err), http.StatusInternalServerError)
 		return
 	}
 
 	response, err = json.Marshal(&cr)
 	if err != nil {
-		logger.Error(err, "failed to marshal response")
-		http.Error(w, fmt.Sprintf("failed to marshal response: %s", err), http.StatusInternalServerError)
+		logger.Error(err, "Failed to marshal response")
+		http.Error(w, fmt.Sprintf("Failed to marshal response: %s", err), http.StatusInternalServerError)
 		return
 	}
 
 	_, err = w.Write(response)
 	if err != nil {
-		logger.Error(err, "error writing coprocessor response")
-		http.Error(w, fmt.Sprintf("error: %s", err), http.StatusInternalServerError)
+		logger.Error(err, "Error writing coprocessor response")
+		http.Error(w, fmt.Sprintf("Error: %s", err), http.StatusInternalServerError)
 		return
 	}
 }

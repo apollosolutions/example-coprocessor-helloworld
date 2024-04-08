@@ -53,7 +53,7 @@ func (rr *RouterRequest) UnmarshalJSON(data []byte) error {
 	// Additionally, I'm not sure there's a way to cause an error in unit tests when decoding to a
 	// json.RawMessage value.
 	if err = json.Unmarshal(data, &rrb); err != nil {
-		logger.Error(err, "failed to unmarshal body")
+		logger.Error(err, "Failed to unmarshal body")
 	}
 
 	if len(rrb.Body) > 0 {
@@ -101,7 +101,7 @@ func (rr *RouterRequest) MarshalJSON() ([]byte, error) {
 		jsonBody, err = json.Marshal(rr.Body)
 
 		if err != nil {
-			logger.Error(err, "failed to marshal coprocessor request struct: %v")
+			logger.Error(err, "Failed to marshal coprocessor request struct: %v")
 		}
 
 		routerRequestBodyOverride.Body = string(jsonBody)
@@ -149,7 +149,7 @@ func (rr *RouterResponse) UnmarshalJSON(data []byte) error {
 	// Additionally, I'm not sure there's a way to cause an error in unit tests when decoding to a
 	// json.RawMessage value.
 	if err = json.Unmarshal(data, &rrb); err != nil {
-		logger.Error(err, "failed to unmarshal body")
+		logger.Error(err, "Failed to unmarshal body")
 	}
 
 	if len(rrb.Body) > 0 {
@@ -198,7 +198,7 @@ func (rr *RouterResponse) MarshalJSON() ([]byte, error) {
 		jsonBody, err = json.Marshal(rr.Body)
 
 		if err != nil {
-			logger.Error(err, "failed to marshal coprocessor request struct: %v")
+			logger.Error(err, "Failed to marshal coprocessor request struct: %v")
 		}
 
 		routerRequestBodyOverride.Body = string(jsonBody)
@@ -219,7 +219,7 @@ func handleRouterRequest(httpRequestBody *[]byte) (*RouterRequest, error) {
 	requestBody, err := json.Marshal(cr)
 
 	if err != nil {
-		logger.Error(err, "failed to marshal coprocessor request struct: %v")
+		logger.Error(err, "Failed to marshal coprocessor request struct: %v")
 	}
 
 	// This is the object sent by the Router that you can act upon to update headers, context, auth claims, etc
