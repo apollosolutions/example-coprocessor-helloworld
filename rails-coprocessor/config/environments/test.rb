@@ -50,6 +50,11 @@ Rails.application.configure do
   # Tell Active Support which deprecation messages to disallow.
   config.active_support.disallowed_deprecation_warnings = []
 
+  # Log to STDOUT by default
+  config.logger = ActiveSupport::Logger.new(STDOUT)
+    .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
+    .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
+
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 

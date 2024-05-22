@@ -47,6 +47,10 @@ Rails.application.configure do
   # Highlight code that enqueued background job in logs.
   config.active_job.verbose_enqueue_logs = true
 
+  # Log to STDOUT by default
+  config.logger = ActiveSupport::Logger.new(STDOUT)
+    .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
+    .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
