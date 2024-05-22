@@ -1,24 +1,25 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Ruby version
 
-Things you may want to cover:
+3.3.1
 
-* Ruby version
+## System dependencies
 
-* System dependencies
+This repo has no dependencies apart from what was included with the `rails new` command
 
-* Configuration
+## Configuration
 
-* Database creation
+You will need to run the following in a terminal:
 
-* Database initialization
+To install the gems run:
 
-* How to run the test suite
+```bash
+bundle install
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+To start your server run:
 
-* Deployment instructions
-
-* ...
+```bash
+rails server
+```
