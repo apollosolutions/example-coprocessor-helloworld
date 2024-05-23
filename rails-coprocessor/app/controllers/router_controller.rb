@@ -2,7 +2,7 @@ require_relative "./../handlers/router_request_handler"
 
 class RouterController < ApplicationController
     def stage
-        response = '{}'
+        response = request.raw_post
         case params['stage']
         when 'RouterRequest'
             response = RouterRequestHandler.handle(request, logger)
