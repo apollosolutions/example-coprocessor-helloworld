@@ -3,7 +3,7 @@ import path from "path";
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
 import { buildSubgraphSchema } from "@apollo/subgraph";
-import { parse } from "graphql";
+import { GraphQLError, parse } from "graphql";
 import resolvers from "./resolvers.js";
 
 const typeDefs = parse(
@@ -16,10 +16,14 @@ const typeDefs = parse(
 
 const server = new ApolloServer({
   schema: buildSubgraphSchema({ typeDefs, resolvers }),
+  hideSchemaDetailsFromClientErrors: true,
 });
 
 const { url } = await startStandaloneServer(server, {
   listen: { port: 4001 },
+  context: (req) => {
+    //console.log(req.req.headers);
+  },
 });
 
 console.log(`🚀 Subgraph ready at: ${url}`);

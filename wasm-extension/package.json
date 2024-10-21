@@ -1,0 +1,17 @@
+{
+    "name": "js-pdk-template",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/index.js",
+    "scripts": {
+        "dev": "nodemon -w src --exec \"npm run build\"",
+        "build": "node esbuild.js && extism-js dist/index.js -i src/index.d.ts -o dist/main.wasm && cp dist/main.wasm ../router/wasm/main.wasm"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "BSD-3-Clause",
+    "devDependencies": {
+        "esbuild": "^0.19.6",
+        "nodemon": "^3.1.7"
+    }
+}

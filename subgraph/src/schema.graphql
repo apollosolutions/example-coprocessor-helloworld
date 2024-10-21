@@ -1,3 +1,25 @@
+extend schema
+  @link(url: "https://specs.apollo.dev/federation/v2.3",
+        import: ["@key"])
+
 type Query {
   hello: String
+  node(nodeId: String): String
+  a: A
+  bigInt: Int!
+}
+
+type A {
+  id: ID!
+  b: B
+}
+
+type B {
+  id: ID!
+  c: C
+}
+
+type C {
+  id: ID!
+  d: String
 }
