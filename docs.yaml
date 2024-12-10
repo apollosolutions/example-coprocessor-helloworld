@@ -1,0 +1,5 @@
+name: example-coprocessor-helloworld
+description: A basic coprocessor example that simply logs the Apollo Router's payload.
+tags:
+  - Coprocessor
+  - Router
