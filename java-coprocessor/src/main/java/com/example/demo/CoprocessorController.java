@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class CoprocessorController {
     private final RouterRequestHandler routerRequestHandler;
 
-    public CoprocessorController() {
-        this.routerRequestHandler = new RouterRequestHandler();
+    public CoprocessorController(RouterRequestHandler routerRequestHandler) {
+        this.routerRequestHandler = routerRequestHandler;
     }
 
     @PostMapping("/")

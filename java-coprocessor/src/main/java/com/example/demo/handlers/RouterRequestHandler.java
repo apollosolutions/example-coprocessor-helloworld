@@ -1,20 +1,33 @@
 package com.example.demo.handlers;
 
+import com.example.demo.models.Body;
 import com.example.demo.models.RouterPayload;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class RouterRequestHandler {
+
+    ObjectMapper objectMapper;
+
+    RouterRequestHandler(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
     public RouterPayload handle(RouterPayload request) {
-        // This is the object sent by the Router that you can act upon to update headers, context, auth claims, etc
-        // If you update the "control" property from "Continue" to something like { "break": 400 }, it will terminate the request and return the specified HTTP error
-        // See: https://www.apollographql.com/docs/router/customizations/coprocessor/
-        // The object sent by the Router has been mapped to a `RouterRequestBody` object by the `@RequestBody` annotation in the `CoprocessorController` class
-        System.out.println(request.getHeaders());
-        System.out.println(request.getMethod());
-        System.out.println(request.getSDL());
-        System.out.println(request.getVersion());
-        System.out.println(request.getStage());
-        System.out.println(request.getControl());
-        System.out.println(request.getId());
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            Body mappedBody = mapper.readValue(request.getBody(), Body.class);
+
+            String variables = mapper.writeValueAsString(mappedBody.getVariables());
+            request.getContext().addEntry("variableValues", variables);
+        } catch (JsonProcessingException e) {
+            // TODO: Implement me
+            e.printStackTrace();
+        }
 
         return request;
     }

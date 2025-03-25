@@ -14,6 +14,8 @@ public class RouterPayload {
     private String sdl;
     private CoprocessorStage stage;
     private Integer version;
+    private String body;
+    private Context context;
 
     RouterPayload() {
         this.control = "continue";
@@ -74,5 +76,21 @@ public class RouterPayload {
 
     public void setVersion(Integer version) {
         this.version = version;
+    }
+
+    public String getBody() {
+        return this.body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public Context getContext() {
+        return this.context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 }
